@@ -1,4 +1,4 @@
-# Datafiniti Ops Tasks
+# Ops Tasks
 
 Provides your rails project with rake tasks for deploying to AWS via Opsworks
 
