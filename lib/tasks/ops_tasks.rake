@@ -10,7 +10,7 @@ namespace :staging do
     stack_id: ENV['staging_stack_id'],
     recipe: ENV['staging_deploy_recipe'],
     project: ENV['staging_project_name'],
-    room: ENV['staging_hipchat_room']
+    room: ENV['staging_slack_channel']
   )
   task :deploy => :environment do
     deploy_id = @staging_deployment.deploy
@@ -30,7 +30,7 @@ namespace :production do
     stack_id: ENV['production_stack_id'],
     recipe: ENV['production_deploy_recipe'],
     project: ENV['production_project_name'],
-    room: ENV['production_hipchat_room']
+    room: ENV['production_slack_channel']
   )
 
   task :deploy => :environment do

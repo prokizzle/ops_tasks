@@ -1,5 +1,5 @@
 require 'aws'
-require 'hipchat'
+require 'say2slack'
 
 module OpsTasks
   require 'ops_tasks/railtie' if defined?(Rails)
@@ -10,8 +10,7 @@ module OpsTasks
         @instance_ids = [args[:id]]
         @recipe = args[:recipe]
         @stack_id = args[:stack_id]
-        @notify = HipChat::Client.new(ENV['HIPCHAT_API_TOKEN'])
-        @hipchat_room = args[:room]
+        @slack_channel = args[:room]
         @project = args[:project]
       else
         puts "No args given"
@@ -53,12 +52,12 @@ module OpsTasks
     def wait_for_completion(deployment_id, task="deployment")
       print "#{@project}: Running... "
       status = @client.describe_deployments(:deployment_ids => [deployment_id])[:deployments].first[:status]
-      @notify[@hipchat_room].send('Chef', "#{@project} #{task} #{status}")
+      "Chef".says("#{@project} #{task} #{status}").to_channel(@slack_channel)
       until status != "running"
         status = @client.describe_deployments(:deployment_ids => [deployment_id])[:deployments].first[:status]
       end
       puts status
-      @notify[@hipchat_room].send('Chef', "#{@project} #{task} #{status}")
+      "Chef".says("#{@project} #{task} #{status}").to_channel(@slack_channel)
     end
 
   end
