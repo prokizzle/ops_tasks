@@ -7,7 +7,7 @@ module OpsTasks
     def initialize(args)
       if args.size > 0
         @client = AWS::OpsWorks::Client.new
-        @instance_ids = args[:layer_id].instances.map{|i| i.instance_id}
+        @layer_id = args[:layer_id]
         @recipe = args[:recipe]
         @stack_id = args[:stack_id]
         @slack_channel = args[:room]
@@ -18,11 +18,17 @@ module OpsTasks
       end
     end
 
+    def instance_ids
+      client = AWS::OpsWorks::Client.new
+      instance_objects = client.describe_instances(:layer_id => @layer_id)
+      return instance_objects.instances.map{|i| i.instance_id}
+    end
+
     def deploy
       print "#{@project}: Preparing deployment... "
       id = @client.create_deployment(
         :stack_id => @stack_id,
-        :instance_ids => @instance_ids,
+        :instance_ids => instance_ids,
         :command => {
           name: "execute_recipes",
           args: {"recipes" => [@recipe]}
@@ -37,7 +43,7 @@ module OpsTasks
 
       id = @client.create_deployment(
         :stack_id => @stack_id,
-        :instance_ids => [@instance_id],
+        :instance_ids => instance_ids,
         :command => {name: 'update_custom_cookbooks'}
       )[:deployment_id]
       puts "successful"
