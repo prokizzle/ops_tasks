@@ -21,7 +21,7 @@ module OpsTasks
     def instance_ids
       client = AWS::OpsWorks::Client.new
       instance_objects = client.describe_instances(:layer_id => @layer_id)
-      return instance_objects.instances.map{|i| i.instance_id}
+      return instance_objects.instances.map{|i| i.instance_id}.to_a
     end
 
     def deploy
