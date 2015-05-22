@@ -1,5 +1,6 @@
 require 'aws-sdk'
 require 'say2slack'
+require 'highline/import'
 
 module OpsTasks
   require 'ops_tasks/railtie' if defined?(Rails)
