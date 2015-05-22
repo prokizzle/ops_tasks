@@ -20,5 +20,6 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", "~> 4"
   s.add_dependency "aws-sdk", "~> 1"
   s.add_dependency "say2slack"
+  s.add_dependency "highline"
 
 end

@@ -44,9 +44,8 @@ namespace :production do
   end
 end
 
-task :deploy, [:server_type] => :environment do |t, args|
-  puts args[:server_type]
-  server_type = args[:server_type].downcase
+task :deploy => :environment do |t, args|
+  server_type = ask("server type: ")
   @deployment = OpsTasks::Deployment.new(
     layer_id: ENV["#{server_type}_layer_id"],
     stack_id: ENV["#{server_type}_stack_id"],
