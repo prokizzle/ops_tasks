@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", "~> 4"
-  s.add_dependency "aws-sdk", "~> 1.0"
+  s.add_dependency "aws-sdk", "~> 1"
   s.add_dependency "say2slack"
 
 end
