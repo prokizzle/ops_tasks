@@ -43,3 +43,17 @@ namespace :production do
     @production_deployment.wait_for_completion(deploy_id, "update cookbooks")
   end
 end
+
+task :deploy, [:server_type] => :environment do |t, args|
+  puts args[:server_type]
+  server_type = args[:server_type].downcase
+  @deployment = OpsTasks::Deployment.new(
+    layer_id: ENV["#{server_type}_layer_id"],
+    stack_id: ENV["#{server_type}_stack_id"],
+    recipe: ENV["#{server_type}_deploy_recipe"],
+    project: ENV["#{server_type}_project_name"],
+    room: ENV["#{server_type}_slack_channel"]
+  )
+  deploy_id = @deployment.deploy
+  @deployment.wait_for_completion(deploy_id)
+end
