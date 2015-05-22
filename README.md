@@ -34,12 +34,12 @@ These are listed on the settings or details page for stacks and instances, and t
 | AWS_ACCESS_KEY_ID    | your AWS access key id / API key |
 | AWS_SECRET_ACCESS_KEY | your AWS secret key / API secret |
 | AWS_REGION            | region of AWS instance (should always be us-east-1) |
-| staging_instance_id | opsworks instance id for qa/staging server |
+| staging_layer_id | opsworks layer id for qa/staging servers |
 | staging_stack_id | opsworks stack id for qa/staging server |
 | staging_deploy_recipe | deployment recipe for qa/staging server (cookbook-name::recipe-name) |
 | staging_project_name | Project description used in hipchat alert ("App Name QA") |
 | staging_slack_channel | Slack channel to alert of deployment |
-| production_instance_id | opsworks instance id for production server |
+| production_layer_id | opsworks layer id for production servers |
 | production_stack_id | opsworks stack id for production server |
 | production_deploy_recipe | deployment recipe for production server (cookbook-name::recipe-name) |
 | production_project_name | Project description used in hipchat alert ("App Name Production") |

@@ -6,7 +6,7 @@
 desc "Deploy to staging"
 namespace :staging do
   @staging_deployment = OpsTasks::Deployment.new(
-    id: ENV['staging_instance_id'],
+    layer_id: ENV['staging_layer_id'],
     stack_id: ENV['staging_stack_id'],
     recipe: ENV['staging_deploy_recipe'],
     project: ENV['staging_project_name'],
@@ -26,7 +26,7 @@ end
 
 namespace :production do
   @production_deployment = OpsTasks::Deployment.new(
-    id: ENV['production_instance_id'],
+    layer_id: ENV['production_layer_id'],
     stack_id: ENV['production_stack_id'],
     recipe: ENV['production_deploy_recipe'],
     project: ENV['production_project_name'],
@@ -42,4 +42,18 @@ namespace :production do
     deploy_id = @production_deployment.update_cookbooks
     @production_deployment.wait_for_completion(deploy_id, "update cookbooks")
   end
+end
+
+task :deploy, [:server_type] => :environment do |t, args|
+  puts args[:server_type]
+  server_type = args[:server_type].downcase
+  @deployment = OpsTasks::Deployment.new(
+    layer_id: ENV["#{server_type}_layer_id"],
+    stack_id: ENV["#{server_type}_stack_id"],
+    recipe: ENV["#{server_type}_deploy_recipe"],
+    project: ENV["#{server_type}_project_name"],
+    room: ENV["#{server_type}_slack_channel"]
+  )
+  deploy_id = @deployment.deploy
+  @deployment.wait_for_completion(deploy_id)
 end

@@ -1,4 +1,4 @@
-require 'aws'
+require 'aws-sdk'
 require 'say2slack'
 
 module OpsTasks
@@ -7,7 +7,7 @@ module OpsTasks
     def initialize(args)
       if args.size > 0
         @client = AWS::OpsWorks::Client.new
-        @instance_ids = [args[:id]]
+        @instance_ids = args[:layer_id].instances.map{|i| i.instance_id}
         @recipe = args[:recipe]
         @stack_id = args[:stack_id]
         @slack_channel = args[:room]
