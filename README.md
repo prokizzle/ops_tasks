@@ -39,6 +39,8 @@ These are listed on the settings or details page for stacks and instances, and t
 | production_deploy_recipe | deployment recipe for production server (cookbook-name::recipe-name) |
 | production_project_name | Project description used in hipchat alert ("App Name Production") |
 | production_slack_channel | Slack channel to alert of deployment |
+| SLACK_API_TOKEN | API token for your slack team |
+| SLACK_BOT_IMG | url for the icon that appears with the alert in slack. defaults to Bender. |
 
 To add additional layers, just copy the above format, and change `production` to whatever you'd like to name it. The deploy task will automatically detect your configurations based on the environment variables you set.
 
