@@ -34,17 +34,21 @@ These are listed on the settings or details page for stacks and instances, and t
 | AWS_ACCESS_KEY_ID    | your AWS access key id / API key |
 | AWS_SECRET_ACCESS_KEY | your AWS secret key / API secret |
 | AWS_REGION            | region of AWS instance (should always be us-east-1) |
-| staging_layer_id | opsworks layer id for qa/staging servers |
-| staging_stack_id | opsworks stack id for qa/staging server |
-| staging_deploy_recipe | deployment recipe for qa/staging server (cookbook-name::recipe-name) |
-| staging_project_name | Project description used in hipchat alert ("App Name QA") |
-| staging_slack_channel | Slack channel to alert of deployment |
 | production_layer_id | opsworks layer id for production servers |
 | production_stack_id | opsworks stack id for production server |
 | production_deploy_recipe | deployment recipe for production server (cookbook-name::recipe-name) |
 | production_project_name | Project description used in hipchat alert ("App Name Production") |
 | production_slack_channel | Slack channel to alert of deployment |
-| HIPCHAT_API_TOKEN | API token for hipchat |
+
+To add additional layers, just copy the above format, and change `production` to whatever you'd like to name it. The deploy task will automatically detect your configurations based on the environment variables you set.
+
+```
+your_server_name_layer_id
+your_server_name_stack_id
+your_server_name_deploy_recipe
+your_server_name_project_name
+your_server_name_slack_channel
+```
 
 You can use figaro or dotenv. I prefer figaro.
 
@@ -57,5 +61,17 @@ You can use figaro or dotenv. I prefer figaro.
 
 ### Deploy to AWS
 
-    rake staging:deploy
-    rake production:deploy
+    bundle exec rake deploy
+
+    Select a server...
+    1. staging
+    2. production
+    3. realtime
+    4. sidekiq
+    5. quit
+    ?  4
+    Sidekiq Server: Preparing deployment... successful
+    Sidekiq Server: Running... successful
+
+
+
