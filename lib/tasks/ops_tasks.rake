@@ -62,4 +62,8 @@ task :deploy => :environment do |t, args|
   )
   deploy_id = @deployment.deploy
   @deployment.wait_for_completion(deploy_id)
+  task :update_cookbooks => :environment do
+    deploy_id = @deployment.update_cookbooks
+    @deployment.wait_for_completion(deploy_id, "update cookbooks")
+  end
 end
