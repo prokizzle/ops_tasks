@@ -44,6 +44,9 @@ module OpsTasks
       return id
     end
 
+    def notifications_disabled?
+      ENV['sidekiq_room_notifications'] == 'false'
+    end
 
     def status(deployment_id)
       @client.describe_deployments(:deployment_ids => [deployment_id])[:deployments].first[:status]
@@ -52,12 +55,12 @@ module OpsTasks
     def wait_for_completion(deployment_id, task="deployment")
       print "#{@project}: Running... "
       status = @client.describe_deployments(:deployment_ids => [deployment_id])[:deployments].first[:status]
-      "Chef".says("#{@project} #{task} #{status}").to_channel(@slack_channel)
+      "Chef".says("#{@project} #{task} #{status}").to_channel(@slack_channel) unless notifications_disabled?
       until status != "running"
         status = @client.describe_deployments(:deployment_ids => [deployment_id])[:deployments].first[:status]
       end
       puts status
-      "Chef".says("#{@project} #{task} #{status}").to_channel(@slack_channel)
+      "Chef".says("#{@project} #{task} #{status}").to_channel(@slack_channel) unless notifications_disabled?
     end
   end
 end
