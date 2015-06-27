@@ -50,6 +50,7 @@ your_server_name_stack_id
 your_server_name_deploy_recipe
 your_server_name_project_name
 your_server_name_slack_channel
+your_server_name_room_notifications
 ```
 
 You can use figaro or dotenv. I prefer figaro.
