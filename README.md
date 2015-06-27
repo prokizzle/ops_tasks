@@ -38,6 +38,7 @@ These are listed on the settings or details page for stacks and instances, and t
 | production_stack_id | opsworks stack id for production server |
 | production_deploy_recipe | deployment recipe for production server (cookbook-name::recipe-name) |
 | production_project_name | Project description used in hipchat alert ("App Name Production") |
+| production_room_notifications | true or false; enable or disable slack alerts |
 | production_slack_channel | Slack channel to alert of deployment |
 | SLACK_API_TOKEN | API token for your slack team |
 | SLACK_BOT_IMG | url for the icon that appears with the alert in slack. defaults to Bender. |
