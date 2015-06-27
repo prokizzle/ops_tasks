@@ -45,7 +45,7 @@ module OpsTasks
     end
 
     def notifications_disabled?
-      ENV['sidekiq_room_notifications'] == 'false'
+      ENV["#{@project}_room_notifications"] == 'false'
     end
 
     def status(deployment_id)
