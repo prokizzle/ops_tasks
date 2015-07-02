@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ops_tasks (0.1.5)
+    ops_tasks (0.4.0)
       aws-sdk (~> 1)
       highline
       rails (~> 4)
@@ -61,7 +61,7 @@ GEM
     http-cookie (1.0.2)
       domain_name (~> 0.5)
     i18n (0.7.0)
-    json (1.8.2)
+    json (1.8.3)
     loofah (2.0.2)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -106,7 +106,7 @@ GEM
       netrc (~> 0.7)
     say2slack (0.0.6)
       rest-client (~> 1.8)
-    sprockets (3.1.0)
+    sprockets (3.2.0)
       rack (~> 1.0)
     sprockets-rails (2.3.1)
       actionpack (>= 3.0)
@@ -125,3 +125,6 @@ PLATFORMS
 
 DEPENDENCIES
   ops_tasks!
+
+BUNDLED WITH
+   1.10.3

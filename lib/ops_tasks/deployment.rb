@@ -32,6 +32,19 @@ module OpsTasks
       return id
     end
 
+    def setup
+      print "#{@project}: Preparing setup... "
+      id = @client.create_deployment(
+        :stack_id => @stack_id,
+        :instance_ids => instance_ids,
+        :command => {
+          name: "setup"
+        }
+      )[:deployment_id]
+      puts "successful"
+      return id
+    end
+
     def update_cookbooks
       print "#{@project}: Preparing cookbook update... "
 
