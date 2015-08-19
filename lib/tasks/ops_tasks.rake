@@ -24,4 +24,11 @@ namespace :ops_tasks do
     deploy_id = deployment.setup
     deployment.wait_for_completion(deploy_id, "setup")
   end
+
+  desc "run config recipe"
+  task :configure => :environment do
+    deployment = OpsTasks::RakeHelper.create_deployment
+    deploy_id = deployment.configure
+    deployment.wait_for_completion(deploy_id, "configure")
+  end
 end
