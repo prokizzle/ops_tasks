@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+require 'ops_tasks'
+
+exec ARGV[1]
+
+def exec(args)
+    deployment = OpsTasks::RakeHelper.create_deployment
+    deploy_id = deployment.send(args.to_sym)
+    deployment.wait_for_completion(deploy_id, args.gsub(/\s/, '_'))
+end
