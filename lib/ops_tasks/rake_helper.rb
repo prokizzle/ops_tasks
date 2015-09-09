@@ -20,17 +20,20 @@ module OpsTasks
       if servers.size > 1
         @server_type = nil
         say("\nSelect a server...")
-        choose do |menu|
-          servers.each do |server|
-            menu.choice server do @server_type = server end
-          end
-          menu.choice "quit" do exit end
-        end
+        show_menu(servers)
       else
         @server_type = servers.first
       end
-      
-      return @server_type
+      @server_type
+    end
+
+    def self.show_menu(servers)
+      choose do |menu|
+        servers.each do |server|
+          menu.choice server do @server_type = server end
+        end
+        menu.choice "quit" do exit end
+      end
     end
 
     def self.create_deployment
