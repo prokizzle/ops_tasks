@@ -10,16 +10,18 @@ Gem::Specification.new do |s|
   s.authors     = ["Nick Prokesch"]
   s.email       = ["nick@prokes.ch"]
   s.homepage    = "http://nick.prokes.ch"
-  s.summary     = "Opsworks Rake Tasks for Deployment"
-  s.description = "Opsworks Rake Tasks for Deployment"
+  s.summary     = "AWS Opsworks Commands"
+  s.description = "AWS Opsworks Rake & CLI Tasks for Deployment"
   s.license     = "MIT"
+  s.executables = ["ops_tasks"]
 
-  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = `git ls-files`.split($\)
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency "rails", "~> 4"
+  # s.add_dependency "rails", "~> 4"
   s.add_dependency "aws-sdk", "~> 1"
-  s.add_dependency "say2slack"
-  s.add_dependency "highline"
+  s.add_dependency "say2slack", "~> 0"
+  s.add_dependency "highline", "~> 1"
+  s.add_dependency "dotenv", "~> 0"
 
 end
