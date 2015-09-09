@@ -17,15 +17,23 @@ module OpsTasks
 
     def self.select_server_type
       check_for_env_vars
-      @server_type = nil
-      say("\nSelect a server...")
+      if servers.size > 1
+        @server_type = nil
+        say("\nSelect a server...")
+        show_menu(servers)
+      else
+        @server_type = servers.first
+      end
+      @server_type
+    end
+
+    def self.show_menu(servers)
       choose do |menu|
         servers.each do |server|
           menu.choice server do @server_type = server end
         end
         menu.choice "quit" do exit end
       end
-      return @server_type
     end
 
     def self.create_deployment
