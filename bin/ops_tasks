@@ -1,11 +1,31 @@
 #!/usr/bin/env ruby
 
 require 'ops_tasks'
+require 'highline/import'
+require 'dotenv'
 
-exec ARGV[1]
+Dotenv.load
 
-def exec(args)
-    deployment = OpsTasks::RakeHelper.create_deployment
-    deploy_id = deployment.send(args.to_sym)
-    deployment.wait_for_completion(deploy_id, args.gsub(/\s/, '_'))
+if ARGV[0] == 'init'
+  `touch .env`
+  `echo 'AWS_ACCESS_KEY_ID=' > .env`
+  `echo 'AWS_SECRET_ACCESS_KEY=' >> .env`
+  `echo 'production_deploy_recipe=' >> .env`
+  `echo 'production_stack_id=' >> .env`
+  `echo 'production_layer_id=' >> .env`
+  `echo 'production_project_name=' >> .env`
+  `echo 'production_slack_channel=' >> .env`
+elsif ARGV[0] == 'add'
+
+  `echo "\n#{ARGV[1]}_deploy_recipe=" >> .env`
+  `echo "#{ARGV[1]}_stack_id=" >> .env`
+  `echo "#{ARGV[1]}_layer_id=" >> .env`
+  `echo "#{ARGV[1]}_project_name=" >> .env`
+  `echo "#{ARGV[1]}_slack_channel=" >> .env`
+elsif ARGV.size.zero?
+  puts "ops_tasks [deploy|update_cookbooks|setup|configure|init] <args>"
+else
+  deployment = OpsTasks::RakeHelper.create_deployment
+  deploy_id = deployment.send(ARGV[0].to_sym)
+  deployment.wait_for_completion(deploy_id, ARGV[0].gsub(/\s/, '_'))
 end
