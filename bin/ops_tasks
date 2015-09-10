@@ -1,10 +1,13 @@
 #!/usr/bin/env ruby
 
 require 'ops_tasks'
+# require_relative '../lib/ops_tasks'
 require 'highline/import'
 require 'dotenv'
 
-Dotenv.load
+# Dotenv.load if OpsTasks::CliHelper.detect_env == 'dotenv'
+# Figaro.load if OpsTasks::CliHelper.detect_env == 'dotenv'
+OpsTasks::CliHelper.load_env
 
 if ARGV[0] == 'init'
   `touch .env`
