@@ -1,6 +1,6 @@
 # Ops Tasks
 
-Provides your rails project with rake tasks for deploying to AWS via Opsworks
+Provides your project with rake tasks for deploying to AWS via Opsworks
 
 - Alerts Slack channel that deployment is starting
 - Initiates a deployment on Opsworks
@@ -12,7 +12,11 @@ Provides your rails project with rake tasks for deploying to AWS via Opsworks
 #### Add gem & source
 
     # Gemfile
-    gem 'ops_tasks'
+    gem 'ops_tasks', '~> 0.4'
+
+#### or install
+
+    gem install 'ops_tasks'
 
 #### Find your AWS IAM Credentials
 
@@ -25,7 +29,6 @@ Then click 'Manage Access Keys' and create a new Access Key. The secret key will
 #### Find your stack and instance IDs
 
 These are listed on the settings or details page for stacks and instances, and they're called _Opsworks ID_.
-
 
 #### Setup your environment variables as follows:
 
@@ -54,18 +57,31 @@ your_server_name_slack_channel
 your_server_name_room_notifications
 ```
 
-You can use figaro or dotenv. I prefer figaro.
+You can use [figaro](https://github.com/laserlemon/figaro) or [dotenv](https://github.com/bkeepers/dotenv). I prefer figaro.
 
-## Usage
+#### Ruby Setup (without rails)
+
+1. If using figaro, add your `application.yml` file to the `./config/` directory (create one).
+1. If using dotenv, use a `.env` file in the root of your project.
+1. To generate a dotenv file, run the command
+
+    ops_tasks init
+
+1. To add a deploy environment, run the command
+
+    ops_tasks add <environment name>
+
+## Usage (With Rails)
+
+If you only have one deployment environment in your env file, ops_tasks will run that one automatically. If more than one exists, ops_tasks will prompt you via a graphical menu.
 
 ### Update Cookbooks
 
-    rake staging:update_cookbooks
-    rake production:update_cookbooks
+    bundle exec rake ops_tasks:update_cookbooks
 
 ### Deploy to AWS
 
-    bundle exec rake deploy
+    bundle exec rake ops_tasks:deploy
 
     Select a server...
     1. staging
@@ -77,5 +93,28 @@ You can use figaro or dotenv. I prefer figaro.
     Sidekiq Server: Preparing deployment... successful
     Sidekiq Server: Running... successful
 
+### Run Configuration Recipes
+
+    bundle exec rake ops_tasks:configure
+
+### Run Setup Recipes
+
+    bundle exec rake ops_tasks:setup
+
+## Usage (Without Rails)
+
+Run any of these tasks from your project directory
+
+    # Run the deploy recipe noted in your env
+    ops_tasks deploy
+
+    # Run the setup recipe(s) as listed in your OpsWorks Layer
+    ops_tasks setup
+
+    # Update your cookbooks on OpsWorks
+    ops_tasks update_cookbooks
+
+    # Run the configure recipe(s) as listed in your OpsWorks Layer
+    ops_tasks configure
 
 
