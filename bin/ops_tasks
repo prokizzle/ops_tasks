@@ -28,6 +28,7 @@ elsif ARGV[0] == 'add'
 elsif ARGV[0] == 'create_instance'
   scale = OpsTasks::RakeHelper.create_scale
   instance_id = scale.create_instance
+  scale.start_instance(instance_id)
   scale.wait_for_completion(instance_id)
 elsif ARGV.size.zero?
   puts "ops_tasks [deploy|update_cookbooks|setup|configure|init] <args>"
