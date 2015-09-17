@@ -1,5 +1,10 @@
 module OpsTasks
   class Scale < OpsTasks::Deployment
+    def initialize(args)
+      @instance_type = args[:instance_type]
+      super
+    end
+
     def create_instance
       @client.create_instance(
         :stack_id => @stack_id,
