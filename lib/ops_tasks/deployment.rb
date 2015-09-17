@@ -109,8 +109,8 @@ module OpsTasks
       puts log_url(id)
     end
 
-    def poll_api_for_status(deployment_id)
-      sleep 1 until assess_status(deployment_id) != "running"
+    def poll_api_for_status(deployment_id, running_status = 'running')
+      sleep 1 until assess_status(deployment_id) != running_status
       puts assess_status(deployment_id)
     end
 
