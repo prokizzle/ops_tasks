@@ -21,10 +21,10 @@ module OpsTasks
 
     def wait_for_completion(instance_id, task="create instance")
       print "#{@project}: Running... "
-      announce_status(task, deployment_id)
-      poll_api_for_status(deployment_id)
-      announce_status(task, deployment_id)
-      announce_log(deployment_id) if deployment_failed?(deployment_id)
+      announce_status(task, wait_for_completion)
+      poll_api_for_status(wait_for_completion)
+      announce_status(task, wait_for_completion)
+      announce_log(wait_for_completion) if deployment_failed?(wait_for_completion)
       Process.daemon if @run_in_background
     end
   end
