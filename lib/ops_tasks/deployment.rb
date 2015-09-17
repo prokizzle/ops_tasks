@@ -10,6 +10,7 @@ module OpsTasks
       @stack_id = args[:stack_id]
       @slack_channel = args[:room]
       @project = args[:project]
+      @run_in_background = args[:background]
     end
 
     def instance_ids
@@ -70,23 +71,56 @@ module OpsTasks
       return id
     end
 
+    def log_url(deployment_id)
+      @client.describe_commands(
+        :deployment_ids => [deployment_id]
+      )[:log_url]
+    end
+
+
     def notifications_disabled?
       ENV["#{@project}_room_notifications"] == 'false'
     end
 
-    def status(deployment_id)
-      @client.describe_deployments(:deployment_ids => [deployment_id])[:deployments].first[:status]
+    # def status(deployment_id)
+    #   @client.describe_deployments(:deployment_ids => [deployment_id])[:deployments].first[:status]
+    # end
+
+    def announce_status(task, deployment_id)
+      return false if notifications_disabled?
+      status = assess_status(deployment_id)
+      "Chef".says("#{@project} #{task} #{status}").to_channel(@slack_channel)
+    end
+
+    def assess_status(deployment_id)
+      @client.describe_deployments(
+        :deployment_ids => [deployment_id]
+      )[:deployments].first[:status]
+    end
+
+    def deployment_failed?(id)
+      assess_status(id) == 'failed'
+    end
+
+    def announce_log(id)
+      "Chef".
+        says("<a href='#{log_url(id)}'>failure log</a>").
+        to_channel(@slack_channel)
+      puts log_url(id)
+    end
+
+    def poll_api_for_status(deployment_id)
+      sleep 1 until assess_status(deployment_id) != "running"
+      puts assess_status(deployment_id)
     end
 
     def wait_for_completion(deployment_id, task="deployment")
       print "#{@project}: Running... "
-      status = @client.describe_deployments(:deployment_ids => [deployment_id])[:deployments].first[:status]
-      "Chef".says("#{@project} #{task} #{status}").to_channel(@slack_channel) unless notifications_disabled?
-      until status != "running"
-        status = @client.describe_deployments(:deployment_ids => [deployment_id])[:deployments].first[:status]
-      end
-      puts status
-      "Chef".says("#{@project} #{task} #{status}").to_channel(@slack_channel) unless notifications_disabled?
+      announce_status(task, deployment_id)
+      poll_api_for_status(deployment_id)
+      announce_status(task, deployment_id)
+      announce_log(deployment_id) if deployment_failed?(deployment_id)
+      Process.daemon if @run_in_background
     end
   end
 end
