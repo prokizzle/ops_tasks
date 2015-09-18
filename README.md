@@ -65,11 +65,11 @@ You can use [figaro](https://github.com/laserlemon/figaro) or [dotenv](https://g
 1. If using dotenv, use a `.env` file in the root of your project.
 1. To generate a dotenv file, run the command
 
-    ops_tasks init
+    `ops_tasks init`
 
 1. To add a deploy environment, run the command
 
-    ops_tasks add <environment name>
+    `ops_tasks add <environment name>`
 
 ## Usage (With Rails)
 
