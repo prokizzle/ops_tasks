@@ -28,7 +28,7 @@ elsif ARGV[0] == 'add'
 elsif ARGV[0] == 'create_instance'
   scale = OpsTasks::RakeHelper.create_scale
   instance_id = scale.create_instance(ARGV[1] == 'true')
-  return false if ARGV[1] == 'true'
+  exit if ARGV[1] == 'true'
   scale.start_instance(instance_id)
   scale.wait_for_completion(instance_id)
 elsif ARGV.size.zero?
