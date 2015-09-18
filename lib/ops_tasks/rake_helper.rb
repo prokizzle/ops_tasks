@@ -46,5 +46,16 @@ module OpsTasks
         room: ENV["#{server_type}_slack_channel"]
       )
     end
+
+    def self.create_scale
+      server_type = select_server_type
+      return OpsTasks::Scale.new(
+        layer_id: ENV["#{server_type}_layer_id"],
+        stack_id: ENV["#{server_type}_stack_id"],
+        instance_type: ENV["#{server_type}_instance_type"],
+        project: ENV["#{server_type}_project_name"],
+        room: ENV["#{server_type}_slack_channel"]
+      )
+    end
   end
 end
