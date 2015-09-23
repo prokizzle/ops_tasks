@@ -32,7 +32,8 @@ module OpsTasks
     end
 
     def poll_api_for_status(deployment_id)
-      sleep 1 until assess_status(deployment_id) == 'online'
+      ok_statuses = ['online', 'setup_failed']
+      sleep 1 until ok_statuses.include?(assess_status(deployment_id))
       puts assess_status(deployment_id)
     end
 
