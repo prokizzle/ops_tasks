@@ -1,6 +1,6 @@
 require 'say2slack'
 require 'aws-sdk'
-require 'open-uri'
+require 'shorturl'
 
 module OpsTasks
   class Deployment
@@ -76,8 +76,8 @@ module OpsTasks
       deploy = @client.describe_commands(
         :deployment_id => deployment_id
       )[:commands].first
-      p deploy
-      deploy[:log_url]
+      # p deploy
+      ShortURL.shorten deploy[:log_url]
     end
 
 

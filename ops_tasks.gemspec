@@ -24,5 +24,6 @@ Gem::Specification.new do |s|
   s.add_dependency "highline", "~> 1"
   s.add_dependency "dotenv", "~> 0"
   s.add_dependency "figaro", "~> 1"
+  s.add_dependency 'shorturl', '~> 1'
 
 end
