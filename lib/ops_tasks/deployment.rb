@@ -72,9 +72,11 @@ module OpsTasks
     end
 
     def log_url(deployment_id)
-      @client.describe_commands(
+      deploy = @client.describe_commands(
         :deployment_id => deployment_id
-      )[:log_url]
+      )
+      p deploy
+      deploy[:log_url]
     end
 
 
@@ -119,7 +121,7 @@ module OpsTasks
       announce_status(task, deployment_id)
       poll_api_for_status(deployment_id)
       announce_status(task, deployment_id)
-      announce_log(deployment_id) if deployment_failed?(deployment_id)
+      announce_log(deployment_id) #if deployment_failed?(deployment_id)
       Process.daemon if @run_in_background
     end
   end
