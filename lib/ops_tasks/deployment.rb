@@ -110,12 +110,12 @@ module OpsTasks
       "Chef".
         says("log: #{URI.encode(log_url(id))}").
         to_channel(@slack_channel)
-      puts log_url(id)
+      # puts log_url(id)
     end
 
     def poll_api_for_status(deployment_id, running_status = 'running')
       sleep 1 until assess_status(deployment_id) != running_status
-      puts assess_status(deployment_id)
+      puts "#{assess_status(deployment_id)} (log: #{log_url(deployment_id)})"
     end
 
     def wait_for_completion(deployment_id, task="deployment")
@@ -123,8 +123,7 @@ module OpsTasks
       announce_status(task, deployment_id)
       poll_api_for_status(deployment_id)
       announce_status(task, deployment_id)
-      announce_log(deployment_id) #if deployment_failed?(deployment_id)
-      Process.daemon if @run_in_background
+      # Process.daemon if @run_in_background
     end
   end
 end
