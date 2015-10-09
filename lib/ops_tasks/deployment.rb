@@ -1,5 +1,6 @@
 require 'say2slack'
 require 'aws-sdk'
+require 'open-uri'
 
 module OpsTasks
   class Deployment
@@ -107,7 +108,7 @@ module OpsTasks
     def announce_log(id)
       return "" if log_url(id).empty?
       "Chef".
-        says("log: #{log_url(id)}").
+        says("log: #{URI.encode(log_url(id))}").
         to_channel(@slack_channel)
       puts log_url(id)
     end
