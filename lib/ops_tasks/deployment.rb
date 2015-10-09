@@ -89,10 +89,11 @@ module OpsTasks
     #   @client.describe_deployments(:deployment_ids => [deployment_id])[:deployments].first[:status]
     # end
 
-    def announce_status(task, deployment_id)
+    def announce_status(task, deployment_id, log = "")
       return false if notifications_disabled?
+      log = "(log: #{log_url(deployment_id)})" unless log.empty?
       status = assess_status(deployment_id)
-      "Chef".says("#{@project} #{task} #{status}").to_channel(@slack_channel)
+      "Chef".says("#{@project} #{task} #{status} #{log}").to_channel(@slack_channel)
     end
 
     def assess_status(deployment_id)
@@ -115,7 +116,8 @@ module OpsTasks
 
     def poll_api_for_status(deployment_id, running_status = 'running')
       sleep 1 until assess_status(deployment_id) != running_status
-      puts "#{assess_status(deployment_id)} (log: #{log_url(deployment_id)})"
+      puts "#{assess_status(deployment_id)}"
+      puts log: "#{log_url(deployment_id)}"
     end
 
     def wait_for_completion(deployment_id, task="deployment")
