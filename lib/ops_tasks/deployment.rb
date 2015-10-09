@@ -105,9 +105,9 @@ module OpsTasks
     end
 
     def announce_log(id)
-      return "" if log_url.empty?
+      return "" if log_url(id).empty?
       "Chef".
-        says("<a href='#{log_url(id)}'>log</a>").
+        says("log: #{log_url(id)}").
         to_channel(@slack_channel)
       puts log_url(id)
     end
