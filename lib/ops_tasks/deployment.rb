@@ -74,7 +74,7 @@ module OpsTasks
     def log_url(deployment_id)
       deploy = @client.describe_commands(
         :deployment_id => deployment_id
-      )
+      )[:commands].first
       p deploy
       deploy[:log_url]
     end
@@ -105,8 +105,9 @@ module OpsTasks
     end
 
     def announce_log(id)
+      return "" if log_url.empty?
       "Chef".
-        says("<a href='#{log_url(id)}'>failure log</a>").
+        says("<a href='#{log_url(id)}'>log</a>").
         to_channel(@slack_channel)
       puts log_url(id)
     end
