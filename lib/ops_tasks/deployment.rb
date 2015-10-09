@@ -73,7 +73,7 @@ module OpsTasks
 
     def log_url(deployment_id)
       @client.describe_commands(
-        :deployment_id => [deployment_id]
+        :deployment_id => deployment_id
       )[:log_url]
     end
 
