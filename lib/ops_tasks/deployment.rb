@@ -115,8 +115,9 @@ module OpsTasks
 
     def poll_api_for_status(deployment_id, running_status = 'running')
       sleep 1 until assess_status(deployment_id) != running_status
-      puts "#{assess_status(deployment_id)}"
-      puts log: "#{log_url(deployment_id)}"
+      astatus = assess_status(deployment_id)
+      puts "#{astatus}"
+      `open #{log_url(deployment_id)}` if astatus == 'failed'
     end
 
     def wait_for_completion(deployment_id, task="deployment")
