@@ -89,11 +89,10 @@ module OpsTasks
     #   @client.describe_deployments(:deployment_ids => [deployment_id])[:deployments].first[:status]
     # end
 
-    def announce_status(task, deployment_id, log = "")
+    def announce_status(task, deployment_id)
       return false if notifications_disabled?
-      log = "(log: #{log_url(deployment_id)})" unless log.empty?
       status = assess_status(deployment_id)
-      "Chef".says("#{@project} #{task} #{status} #{log}").to_channel(@slack_channel)
+      "Chef".says("#{@project} #{task} <#{log_url(deployment_id)}|#{status}>").to_channel(@slack_channel)
     end
 
     def assess_status(deployment_id)
