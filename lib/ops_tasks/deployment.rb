@@ -76,8 +76,7 @@ module OpsTasks
       deploy = @client.describe_commands(
         :deployment_id => deployment_id
       )[:commands].first
-      # p deploy
-      ShortURL.shorten deploy[:log_url]
+      ShortURL.shorten(deploy[:log_url]).to_s rescue "https://console.aws.com"
     end
 
 
