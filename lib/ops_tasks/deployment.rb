@@ -27,8 +27,7 @@ module OpsTasks
         :stack_id => @stack_id,
         :app_id =>  @app_id,
         :command => {
-          name: "execute_recipes",
-          args: {"recipes" => [@recipe]}
+          name: "deploy"
         }
       )[:deployment_id]
       puts "successful"
