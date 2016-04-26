@@ -9,6 +9,7 @@ module OpsTasks
       @layer_id = args[:layer_id]
       @recipe = args[:recipe]
       @stack_id = args[:stack_id]
+      @app_id = args[:app_id]
       @slack_channel = args[:room]
       @project = args[:project]
       @run_in_background = args[:background]
@@ -24,7 +25,7 @@ module OpsTasks
       print "#{@project}: Preparing deployment... "
       id = @client.create_deployment(
         :stack_id => @stack_id,
-        :instance_ids => instance_ids,
+        :app_id =>  @app_id,
         :command => {
           name: "execute_recipes",
           args: {"recipes" => [@recipe]}

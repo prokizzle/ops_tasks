@@ -41,6 +41,7 @@ module OpsTasks
       return OpsTasks::Deployment.new(
         layer_id: ENV["#{server_type}_layer_id"],
         stack_id: ENV["#{server_type}_stack_id"],
+        app_id: ENV["#{server_type}_app_id"],
         recipe: ENV["#{server_type}_deploy_recipe"],
         project: ENV["#{server_type}_project_name"],
         room: ENV["#{server_type}_slack_channel"]
