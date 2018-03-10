@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency "aws-sdk", ">= 1", "< 4"
   s.add_dependency "say2slack", "~> 0"
   s.add_dependency "highline", "~> 1"
-  s.add_dependency "dotenv", "~> 0"
+  s.add_dependency "dotenv", "< 3"
   s.add_dependency "figaro", "~> 1"
   s.add_dependency 'shorturl', '~> 1'
 
